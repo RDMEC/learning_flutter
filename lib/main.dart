@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dio/dio.dart';
 
+import 'package:admin_dashboard_poc/env_vars.dart';
 import 'package:admin_dashboard_poc/home/home.dart';
 import 'package:admin_dashboard_poc/client/client_screen.dart';
-import 'package:admin_dashboard_poc/unknown.dart';
+import 'package:admin_dashboard_poc/unknown/unknown.dart';
 
 void main() {
   runApp(const ProviderScope(child: AdminApp()));
 }
+
+final dioProvider = Provider<Dio>((ref) {
+  return Dio(BaseOptions(
+    baseUrl: apiUrl,
+  ));
+});
 
 class AdminApp extends StatefulWidget {
   const AdminApp({Key? key}) : super(key: key);
