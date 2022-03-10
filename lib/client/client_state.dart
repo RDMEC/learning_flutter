@@ -1,13 +1,4 @@
-import 'package:admin_dashboard_poc/client/client.dart';
 import 'package:flutter/material.dart';
-
-
-const clientMock = Client(
-  name: "Fulano",
-  cpf: 99999999999,
-  dateOfBirth: "01/04/1971",
-  isPep: false
-);
 
 
 @immutable
