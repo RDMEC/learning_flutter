@@ -1,0 +1,1 @@
+const apiUrl = String.fromEnvironment("admin_api_url", defaultValue: "https://api.rispar.dev/");
