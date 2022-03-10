@@ -7,6 +7,7 @@ import 'package:admin_dashboard_poc/env_vars.dart';
 import 'package:admin_dashboard_poc/home/home.dart';
 import 'package:admin_dashboard_poc/client/client_screen.dart';
 import 'package:admin_dashboard_poc/unknown/unknown.dart';
+import 'package:admin_dashboard_poc/login_flow/login_flow.dart';
 
 void main() {
   runApp(const ProviderScope(child: AdminApp()));
@@ -37,6 +38,10 @@ class _AdminAppState extends State<AdminApp> {
       GoRoute(
         path: '/client',
         builder: (context, state) => ClientScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginFlow(),
       ),
     ],
     errorBuilder: (context, state) => const UnknownScreen(),
