@@ -26,18 +26,26 @@ class LoginFlowController extends StateNotifier<LoginState> {
     state = state.copyWith(email: email, isLoading: true);
 
     String id = await _loginService.login(email, password);
-    
-    await state.pageController.nextPage(
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeOutCubic,
-    );
-    state = state.copyWith(id: id, isLoading: false);
+    if (id == '') {
+      state = state.copyWith(unauthorized: true, isLoading: false);  
+    } else {
+      await state.pageController.nextPage(
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutCubic,
+      );
+      state = state.copyWith(id: id, isLoading: false, unauthorized: false);
+    }
   }
 
   Future<void> confirm(String confirmationToken) async {
     state = state.copyWith(confirmationToken: confirmationToken, isLoading: true);
+
     String accessToken = await _loginService.confirm(state.id!, confirmationToken);
-    state = state.copyWith(accessToken: accessToken, isLoading: false, isLoggedIn: true);
+    if (accessToken == '') {
+      state = state.copyWith(unauthorized: true, isLoading: false);
+    } else {
+      state = state.copyWith(accessToken: accessToken, isLoading: false, isLoggedIn: true, unauthorized: false);
+    }
   }
 
   bool isLoggedIn() {

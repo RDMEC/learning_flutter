@@ -11,6 +11,7 @@ class LoginState {
   final String? accessToken;
   bool isLoading;
   bool isLoggedIn;
+  bool unauthorized;
 
   LoginState({
     required this.pageController,
@@ -20,6 +21,7 @@ class LoginState {
     this.accessToken,
     this.isLoading = false,
     this.isLoggedIn = false,
+    this.unauthorized = false,
   });
 
   LoginState copyWith({
@@ -30,6 +32,7 @@ class LoginState {
     String? accessToken,
     bool? isLoading,
     bool? isLoggedIn,
+    bool? unauthorized,
   }) {
     return LoginState(
       pageController: pageController ?? this.pageController,
@@ -39,6 +42,7 @@ class LoginState {
       accessToken: accessToken ?? this.accessToken,
       isLoading: isLoading ?? this.isLoading,
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      unauthorized: unauthorized ?? this.unauthorized,
     );
   }
 

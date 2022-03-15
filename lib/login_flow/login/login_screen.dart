@@ -11,9 +11,11 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(loginFlowControllerProvider).isLoading ? 
-      const Center(child: CircularProgressIndicator(),) :
-      Scaffold(
+    return ref.watch(loginFlowControllerProvider).isLoading
+      ? const Center(
+        child: CircularProgressIndicator(),
+      )
+      : Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Login"),
@@ -25,42 +27,51 @@ class LoginScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
                 child: SizedBox(
-                    width: 200,
-                    height: 150,
-                    child: Image.asset('asset/images/flutter-logo.png')
+                  width: 200,
+                  height: 150,
+                  child: Image.asset('asset/images/flutter-logo.png')
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 250, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 250, vertical: 10),
               child: TextField(
                 controller: emailController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Email',
-                  hintText: 'Seu email de usuário'
-                ),
+                  hintText: 'Seu email de usuário',
+                  errorText: ref.watch(loginFlowControllerProvider).unauthorized ?
+                  'Dados de login inválidos' : null,
+                )
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 250, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 250, vertical: 10),
               child: TextField(
                 controller: passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Senha',
-                    hintText: 'Sua senha'),
+                  border: OutlineInputBorder(),
+                  labelText: 'Senha',
+                  hintText: 'Sua senha'
+                ),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(20)
+              ),
               child: TextButton(
                 onPressed: () {
-                  ref.read(loginFlowControllerProvider.notifier).login(emailController.text, passwordController.text);
+                  ref.read(loginFlowControllerProvider.notifier).login(
+                    emailController.text, passwordController.text
+                  );
                 },
                 child: const Text(
                   'Login',

@@ -36,10 +36,12 @@ class ConfirmationScreen extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 250, vertical: 10),
               child: TextField(
                 controller: codeController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   labelText: 'Código',
-                  hintText: 'Código de confirmação'
+                  hintText: 'Código de confirmação',
+                  errorText: ref.watch(loginFlowControllerProvider).unauthorized ?
+                    'Código inválido' : null,
                 ),
               ),
             ),

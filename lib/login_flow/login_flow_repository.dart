@@ -20,36 +20,35 @@ class AdminLoginRepository extends LoginRepository {
 
   @override
   Future<String> login(String email, String password) async {
-    print('login function inside login_repository');
-    final response = await dio.post(
-      'manager/session',
-      data: {
-        'email': email,
-        'password': password
-      },
-    );
+    try{
+      final response = await dio.post(
+        'manager/session',
+        data: {
+          'email': email,
+          'password': password
+        },
+      );
 
-    print("login response: ${response}");
-
-    return response.data['data']['id'].toString();
+      return response.data['data']['id'].toString();
+    } catch(err) {
+      return '';
+    }
   }
 
   @override
   Future<String> confirm(String id, String confirmationToken) async {
-    print('confirm function inside login_repository');
-    print('id ${id}');
-    print('confirmationToken ${confirmationToken}');
-    final response = await dio.post(
-      'manager/user-confirmation',
-      data: {
-        'id': id,
-        'confirmation_token': confirmationToken
-      },
-    );
+    try {
+      final response = await dio.post(
+        'manager/user-confirmation',
+        data: {
+          'id': id,
+          'confirmation_token': confirmationToken
+        },
+      );
 
-    print("confirm response: ${response}");
-
-    return response.data['data']['access_token'].toString();
+      return response.data['data']['access_token'].toString();
+    } catch (err) {
+      return '';
+    }
   }
-
 }
