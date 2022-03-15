@@ -6,10 +6,7 @@ import 'package:admin_dashboard_poc/home/home.dart';
 class HomePage extends StatelessWidget {
   const HomePage({
     Key? key,
-    // required this.toClientScreen,
   }) : super(key: key);
-
-  // final VoidCallback toClientScreen;
 
   Widget build(BuildContext context) {
     return Scaffold(
