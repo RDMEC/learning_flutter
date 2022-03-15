@@ -6,35 +6,39 @@ import 'package:riverpod/riverpod.dart';
 class LoginState {
   final PageController pageController;
   final String? email;
-  final String? password;
   final String? id;
   final String? confirmationToken;
   final String? accessToken;
+  bool isLoading;
+  bool isLoggedIn;
 
-  const LoginState({
+  LoginState({
     required this.pageController,
     this.email,
-    this.password,
     this.id,
     this.confirmationToken,
     this.accessToken,
+    this.isLoading = false,
+    this.isLoggedIn = false,
   });
 
   LoginState copyWith({
     PageController? pageController,
     String? email,
-    String? password,
-    String ? id,
-    String ? confirmationToken,
-    String ? accessToken,
+    String? id,
+    String? confirmationToken,
+    String? accessToken,
+    bool? isLoading,
+    bool? isLoggedIn,
   }) {
     return LoginState(
       pageController: pageController ?? this.pageController,
       email: email ?? this.email,
-      password: password ?? this.password,
       id: id ?? this.id,
       confirmationToken: confirmationToken ?? this.confirmationToken,
       accessToken: accessToken ?? this.accessToken,
+      isLoading: isLoading ?? this.isLoading,
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
     );
   }
 
@@ -45,7 +49,6 @@ class LoginState {
     return other is LoginState &&
         other.pageController == pageController &&
         other.email == email &&
-        other.password == password &&
         other.id == id &&
         other.confirmationToken == confirmationToken &&
         other.accessToken == accessToken;
@@ -55,7 +58,6 @@ class LoginState {
   int get hashCode {
     return pageController.hashCode ^
       email.hashCode ^
-      password.hashCode ^
       id.hashCode ^
       confirmationToken.hashCode ^
       accessToken.hashCode;

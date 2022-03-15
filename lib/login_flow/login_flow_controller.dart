@@ -22,24 +22,25 @@ class LoginFlowController extends StateNotifier<LoginState> {
 
   final LoginService _loginService;
 
-  void login(String email, String password) {
-    state = state.copyWith(email: email);
+  Future<void> login(String email, String password) async {
+    state = state.copyWith(email: email, isLoading: true);
 
-    _loginService.login(email, password).then((String id) => {
-      state = state.copyWith(id: id),
-      state.pageController.nextPage(
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeOutCubic,
-      ),
-    });
+    String id = await _loginService.login(email, password);
+    
+    await state.pageController.nextPage(
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeOutCubic,
+    );
+    state = state.copyWith(id: id, isLoading: false);
   }
 
-  void confirm(String confirmationToken) {
-    state = state.copyWith(confirmationToken: confirmationToken);
+  Future<void> confirm(String confirmationToken) async {
+    state = state.copyWith(confirmationToken: confirmationToken, isLoading: true);
+    String accessToken = await _loginService.confirm(state.id!, confirmationToken);
+    state = state.copyWith(accessToken: accessToken, isLoading: false, isLoggedIn: true);
+  }
 
-    _loginService.confirm(state.id!, confirmationToken).then((String accessToken) => {
-      state = state.copyWith(accessToken: accessToken),
-      // Route to client page. How?
-    });
+  bool isLoggedIn() {
+    return state.isLoggedIn;
   }
 }

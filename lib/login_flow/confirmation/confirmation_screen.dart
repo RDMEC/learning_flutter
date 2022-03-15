@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:admin_dashboard_poc/login_flow/login_flow_controller.dart';
 
@@ -11,7 +12,9 @@ class ConfirmationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
+    return ref.watch(loginFlowControllerProvider).isLoading ? 
+      const Center(child: CircularProgressIndicator(),) :
+      Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Login"),
@@ -46,8 +49,9 @@ class ConfirmationScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
-                  ref.read(loginFlowControllerProvider.notifier).confirm(codeController.text);
+                onPressed: () async {
+                  await ref.read(loginFlowControllerProvider.notifier).confirm(codeController.text);
+                  if (ref.read(loginFlowControllerProvider.notifier).isLoggedIn()) context.go('/client');
                 },
                 child: const Text(
                   'Enviar',

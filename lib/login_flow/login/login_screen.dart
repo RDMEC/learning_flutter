@@ -11,7 +11,9 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
+    return ref.watch(loginFlowControllerProvider).isLoading ? 
+      const Center(child: CircularProgressIndicator(),) :
+      Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Login"),
